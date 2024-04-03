@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import { MainBlock }  from './components/MainBlock';
+import MainBlock from './components/MainBlock';
 
 function App() {
   return (
