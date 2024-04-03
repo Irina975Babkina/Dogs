@@ -1,23 +1,12 @@
+import React from 'react';
 import './App.css';
-import logo from './logo.svg';
+import { MainBlock }  from './components/MainBlock';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>
-          Dogs App
-        </h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Сute cats</h1>
+      <MainBlock/> 
     </div>
   );
 }
