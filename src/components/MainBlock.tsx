@@ -1,11 +1,26 @@
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { CardActionArea } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-
 interface Dog {
-    id: number;
+    id: string;
     url: string;
+    breeds: Breed[];
+  }
+  interface Breed {
+    id: string;
+    weight: Weight;
+    name: string;
+    temperament: string;
+    life_span: string;
+  }
+
+  interface Weight {
+    imperial: string;
+    metric: string;
   }
 
 const DogsList: React.FC = () => {
@@ -16,7 +31,7 @@ const DogsList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://api.thecatapi.com/v1/images/search?limit=50&breed_ids=beng&api_key=live_ygAzh3cysTZXmcRR53kBWJtYOS4DwjjD0mA4smj7VARmPc22kdtyJgwcGj4VCkaE");
+        const response = await fetch("https://api.thedogapi.com/v1/images/search?limit=100&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -30,31 +45,47 @@ const DogsList: React.FC = () => {
     };
 
     fetchData();
-  }, []); // This effect runs once on mount
+  }, []); 
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div style={{ padding: 20 }}>
       <h2> List</h2>
-      <ImageList sx={{ width: 800, height: 750 }}>
-      {dogs.map((dog) => (
-        <ImageListItem key={dog.id}>
-          <img
-            srcSet={`${dog.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            src={`${dog.url}?w=248&fit=crop&auto=format`}
-            alt={"dog"} // REPLACE
-            loading="lazy"
-          />
-          <ImageListItemBar
-            title={dog.id}
-            // subtitle={<span>by: {item.author}</span>} // REPLACE
-            position="below"
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+      <Grid container spacing={3}>
+      {dogs.map((dog) => dog?.breeds?.length > 0 && (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                    <CardMedia
+                    component="img"
+                    src={`${dog.url}?w=248&fit=crop&auto=format`}
+                    style={{ width: '100%', height: '200px', objectFit: 'contain' }}
+                    alt={"Dog"}
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {dog?.breeds?.[0]?.name }
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Temperament: {dog?.breeds?.[0]?.temperament ?? ''}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Life Span: {dog?.breeds?.[0]?.life_span ?? ''}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Weight (lb): {dog?.breeds?.[0]?.weight.imperial ?? ''}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                        Weight (kg): {dog?.breeds?.[0]?.weight.metric ?? ''}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
