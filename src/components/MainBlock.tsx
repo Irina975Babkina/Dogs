@@ -1,8 +1,9 @@
-import { CardActionArea } from '@mui/material';
+import { Box, CardActionArea, Stack } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 interface Dog {
@@ -27,11 +28,13 @@ const DogsList: React.FC = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://api.thedogapi.com/v1/images/search?limit=100&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7");
+        const response = await fetch(`https://api.thedogapi.com/v1/images/search?limit=20&page=${page}&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -45,23 +48,27 @@ const DogsList: React.FC = () => {
     };
 
     fetchData();
-  }, []); 
+  }, [page]); 
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
-    <div style={{ padding: 20 }}>
-      <h2> List</h2>
+    <Stack justifyContent="center">
       <Grid container spacing={3}>
       {dogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardActionArea>
                     <CardMedia
                     component="img"
                     src={`${dog.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '200px', objectFit: 'contain' }}
+                    style={{ width: '100%', height: '300px', objectFit: 'contain' }}
                     alt={"Dog"}
                     />
                     <CardContent>
@@ -86,7 +93,32 @@ const DogsList: React.FC = () => {
           </Grid>
         ))}
       </Grid>
-    </div>
+      <Stack spacing={1} marginTop={{xs: "1rem", sm: "2rem", md: "3rem"}} justifyContent="center">
+        <Pagination
+          count={10}
+          shape="rounded"
+          color="primary"
+          page={page}
+          onChange={handlePageChange}
+          sx={{
+            '.MuiPagination-ul': {
+              justifyContent: 'center',
+            },
+            '@media (max-width:600px)': {
+              size: 'small', 
+            },
+            '@media (min-width:600px)': {
+              size: 'large', 
+            },
+          }}
+        />
+      </Stack>
+      <Box mt={3} sx={{width:"100%", paddingBottom: "1.5rem", paddingTop:{xs: "1rem", sm: "2rem", md: "3rem"}}}>
+        <Typography align="center" color="#5b4a44" fontSize="calc(7px + 1vmin)">
+          © {new Date().getFullYear()} Irina Babkina & Aleksandra Lysachok. All Rights Reserved.
+        </Typography>
+      </Box>
+    </Stack>
   );
 };
 
