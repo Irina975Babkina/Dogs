@@ -1,4 +1,4 @@
-import { Box, CardActionArea, Stack } from '@mui/material';
+import { Box, Button, CardActionArea, CardActions, Stack } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+
 interface Dog {
     id: string;
     url: string;
@@ -64,31 +65,46 @@ const DogsList: React.FC = () => {
       {dogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
             <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <CardActionArea>
-                    <CardMedia
-                    component="img"
-                    src={`${dog.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '300px', objectFit: 'contain' }}
-                    alt={"Dog"}
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {dog?.breeds?.[0]?.name }
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        Temperament: {dog?.breeds?.[0]?.temperament ?? ''}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        Life Span: {dog?.breeds?.[0]?.life_span ?? ''}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        Weight (lb): {dog?.breeds?.[0]?.weight.imperial ?? ''}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                        Weight (kg): {dog?.breeds?.[0]?.weight.metric ?? ''}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
+              <CardActionArea 
+                component="a" 
+                href={`https://en.wikipedia.org/wiki/${dog?.breeds?.[0]?.name}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >                    
+                <CardMedia
+                component="img"
+                src={`${dog.url}?w=248&fit=crop&auto=format`}
+                style={{ width: '100%', height: '300px', objectFit: 'contain' }}
+                alt={"Dog"}
+                
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {dog?.breeds?.[0]?.name }
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    Temperament: {dog?.breeds?.[0]?.temperament ?? ''}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    Life Span: {dog?.breeds?.[0]?.life_span ?? ''}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    Weight (lb): {dog?.breeds?.[0]?.weight.imperial ?? ''}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                    Weight (kg): {dog?.breeds?.[0]?.weight.metric ?? ''}
+                    </Typography>
+                </CardContent> 
+              </CardActionArea>
+              <CardActions>
+                <a
+                  href={`https://en.wikipedia.org/wiki/${dog?.breeds?.[0]?.name}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <Button>More on Wikipedia</Button>
+                </a>    
+                </CardActions>  
             </Card>
           </Grid>
         ))}
