@@ -65,12 +65,7 @@ const DogsList: React.FC = () => {
       {dogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
             <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <CardActionArea 
-                component="a" 
-                href={`https://en.wikipedia.org/wiki/${dog?.breeds?.[0]?.name}`} 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >                    
+              <CardActionArea style={{ cursor: 'default' }}>                    
                 <CardMedia
                 component="img"
                 src={`${dog.url}?w=248&fit=crop&auto=format`}
