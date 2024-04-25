@@ -1,4 +1,4 @@
-import { Box, Button, CardActionArea, CardActions, Stack } from '@mui/material';
+import { Button, CardActionArea, CardActions, Stack } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
+import Copyright from './Copyright';
 
 interface Dog {
     id: string;
@@ -25,7 +26,7 @@ interface Dog {
     metric: string;
   }
 
-const DogsList: React.FC = () => {
+const Dogs: React.FC = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,13 +55,19 @@ const DogsList: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
+  const typographyStyle = {
+    fontSize: 'calc(16px + 6vmin)',
+    color: '#4b4b51',
+    m: '2rem'
+  };
+
   return (
-    <Stack justifyContent="center">
+  <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
+      <Typography sx={typographyStyle}>...pick your pet online</Typography>
       <Grid container spacing={3}>
       {dogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
@@ -124,13 +131,9 @@ const DogsList: React.FC = () => {
           }}
         />
       </Stack>
-      <Box mt={3} sx={{width:"100%", paddingBottom: "1.5rem", paddingTop:{xs: "1rem", sm: "2rem", md: "3rem"}}}>
-        <Typography align="center" color="#5b4a44" fontSize="calc(7px + 1vmin)">
-          © {new Date().getFullYear()} Irina Babkina & Aleksandra Lysachok. All Rights Reserved.
-        </Typography>
-      </Box>
+      <Copyright />
     </Stack>
   );
 };
 
-export default DogsList;
+export default Dogs;

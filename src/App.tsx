@@ -1,12 +1,19 @@
-import { Stack } from '@mui/material';
-import MainBlock from './components/MainBlock';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Cats from './components/Cats';
+import Dogs from './components/Dogs';
+import Home from './components/HomePage';
 
 function App() {
   return (
-    <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
-     <h1>Сute dogs</h1>
-      <MainBlock/> 
-    </Stack>
+    <Router>
+      <div>
+        <Routes> 
+          <Route path="/cats" element={<Cats />} /> 
+          <Route path="/dogs" element={<Dogs />} />
+          <Route path="/" element={<Home />} /> 
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
