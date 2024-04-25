@@ -1,6 +1,7 @@
 import { Card, CardActionArea, CardMedia, Stack, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import Copyright from './Copyright';
+import Header from './Header';
 
 function Home() {
   const rootStyle = {
@@ -8,13 +9,7 @@ function Home() {
     height: '100vh',
     justifyContent: 'center',
     textAlign: 'center',
-    overflow: 'hidden'
-  };
-
-  const typographyStyle = {
-    fontSize: 'calc(16px + 6vmin)',
-    color: '#4b4b51',
-    m: '2rem'
+    overflow: 'hidden',
   };
 
   const stackStyle = {
@@ -38,10 +33,7 @@ function Home() {
 
   return (
     <Stack sx={rootStyle}>
-        <Stack flexDirection="column" alignContent="center">
-            <img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo" width="150px"></img>
-            <Typography sx={typographyStyle}>...pick your pet online</Typography>
-        </Stack>
+        <Header/>
         <Stack sx={stackStyle}>
             <Card sx={{ ...cardStyle, backgroundColor: "#7ba0b0" }}>
                 <NavLink to="/cats">
@@ -49,7 +41,7 @@ function Home() {
                         <CardMedia
                         component="img"
                         src={process.env.PUBLIC_URL + '/cat.png'}
-                        style={{ width: '100%', maxHeight: '350px', objectFit: 'contain', marginTop: "2rem"}}
+                        style={{ width: '100%', maxHeight: '350px', objectFit: 'contain'}}
                         alt={"Cat"}
                         />
                     </CardActionArea>
@@ -62,7 +54,7 @@ function Home() {
                         <CardMedia
                         component="img"
                         src={process.env.PUBLIC_URL + '/dog.png'}
-                        style={{ width: '100%', maxHeight: '350px', objectFit: 'contain', marginTop: "2rem"}}
+                        style={{ width: '100%', maxHeight: '350px', objectFit: 'contain'}}
                         alt={"Dog"}
                         />
                     </CardActionArea>

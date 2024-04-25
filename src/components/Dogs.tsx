@@ -7,6 +7,9 @@ import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import Copyright from './Copyright';
+import ErrorPage from './ErrorPage';
+import Header from './Header';
+import Loading from './Loading';
 
 interface Dog {
     id: string;
@@ -52,22 +55,16 @@ const Dogs: React.FC = () => {
     fetchData();
   }, [page]); 
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isLoading) return <Loading/>
+  if (error) return <ErrorPage />;
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
-  const typographyStyle = {
-    fontSize: 'calc(16px + 6vmin)',
-    color: '#4b4b51',
-    m: '2rem'
-  };
-
   return (
   <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
-      <Typography sx={typographyStyle}>...pick your pet online</Typography>
+      <Header />
       <Grid container spacing={3}>
       {dogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
