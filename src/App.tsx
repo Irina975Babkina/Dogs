@@ -1,12 +1,27 @@
 import { Stack } from '@mui/material';
-import MainBlock from './components/MainBlock';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Cats from './components/Cats';
+import Dogs from './components/Dogs';
+import ErrorPage from './components/ErrorPage';
+import Home from './components/HomePage';
+
+const mainContainerStyle = {
+  paddingLeft: {xs:"1rem", sm: "2rem", md:"4rem"},
+  paddingRight: {xs:"1rem", sm: "2rem", md:"4rem"},
+};
 
 function App() {
   return (
-    <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
-     <h1>Сute dogs</h1>
-      <MainBlock/> 
-    </Stack>
+    <Router>
+      <Stack sx={mainContainerStyle}>
+        <Routes> 
+          <Route path="/cats" element={<Cats />} /> 
+          <Route path="/dogs" element={<Dogs />} />
+          <Route path="/" element={<Home />} /> 
+          <Route path="*" element={<ErrorPage />}  />
+        </Routes>
+      </Stack>
+    </Router>
   );
 }
 
