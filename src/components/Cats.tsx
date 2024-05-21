@@ -65,8 +65,7 @@ const CatsList: React.FC = () => {
     <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
         <Header />
         <Grid container spacing={3} marginTop={{xs: "0rem", md:"2rem"}}>
-        {/* {cats.map((cat) => cat?.breeds?.length > 0 && ( */}
-            {cats.map((cat) => 
+          {cats.map((cat) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={cat.id}>
                 <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardActionArea style={{ cursor: 'default' }}>                    
@@ -74,7 +73,7 @@ const CatsList: React.FC = () => {
                     component="img"
                     src={`${cat.url}?w=248&fit=crop&auto=format`}
                     style={{ width: '100%', height: '300px', objectFit: 'contain' }}
-                    alt={"Dog"}
+                    alt={"Cat"}
                     
                     />
                     <CardContent>
@@ -106,7 +105,7 @@ const CatsList: React.FC = () => {
                 </CardActions>  
                 </Card>
             </Grid>
-            )}
+            ))}
         </Grid>
         <Stack spacing={1} marginTop={{xs: "1rem", sm: "2rem", md: "3rem"}} justifyContent="center">
             <Pagination
