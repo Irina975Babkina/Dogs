@@ -10,6 +10,7 @@ import Copyright from './Copyright';
 import ErrorPage from './ErrorPage';
 import Header from './Header';
 import Loading from './Loading';
+import TextField from '@mui/material/TextField';
 
 interface Dog {
     id: string;
@@ -31,6 +32,7 @@ interface Dog {
 
 const Dogs: React.FC = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
@@ -58,6 +60,10 @@ const Dogs: React.FC = () => {
   if (isLoading) return <Loading/>
   if (error) return <ErrorPage />;
 
+  const filteredDogs = dogs.filter(dog => {
+    return dog?.breeds?.[0]?.name.toLowerCase().startsWith(searchValue.toLowerCase());
+  });
+
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
@@ -65,15 +71,21 @@ const Dogs: React.FC = () => {
   return (
   <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
       <Header />
+      <TextField 
+        style={{ width:"40%", margin: "10px 0 20px"}}
+        label="search" 
+        type="search"  
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
       <Grid container spacing={3}>
-      {dogs.map((dog) => dog?.breeds?.length > 0 && (
+      {filteredDogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
             <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <CardActionArea style={{ cursor: 'default' }}>                    
                 <CardMedia
                 component="img"
                 src={`${dog.url}?w=248&fit=crop&auto=format`}
-                style={{ width: '100%', height: '300px', objectFit: 'contain' }}
+                style={{ width: '90%', height: '300px', objectFit: 'contain', margin: "10px auto 0"}}
                 alt={"Dog"}
                 
                 />

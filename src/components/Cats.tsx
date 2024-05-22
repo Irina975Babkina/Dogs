@@ -9,6 +9,7 @@ import ErrorPage from './ErrorPage';
 import Header from './Header';
 import Loading from './Loading';
 
+
 interface Cat {
     id: string;
     url: string;
@@ -36,7 +37,7 @@ const CatsList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=20&page=${page}&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=150&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -73,7 +74,7 @@ const CatsList: React.FC = () => {
                     <CardMedia
                     component="img"
                     src={`${cat.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '300px', objectFit: 'contain' }}
+                    style={{ width: '90%', height: '300px', objectFit: 'contain', margin: "10px auto 0" }}
                     alt={"Dog"}
                     
                     />
