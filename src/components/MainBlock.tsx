@@ -1,11 +1,15 @@
-import { Box, CardActionArea, Stack } from '@mui/material';
+import { Box, CardActionArea, colors, Stack } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import React, { useEffect, useState } from 'react';
+import { text } from 'stream/consumers';
 interface Dog {
     id: string;
     url: string;
@@ -26,6 +30,7 @@ interface Dog {
 
 const DogsList: React.FC = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
@@ -34,7 +39,7 @@ const DogsList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.thedogapi.com/v1/images/search?limit=20&page=${page}&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
+        const response = await fetch(`https://api.thedogapi.com/v1/images/search?limit=50&page=${page}&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -57,18 +62,36 @@ const DogsList: React.FC = () => {
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+  console.log(searchValue);
 
+  const filteredDogs = dogs.filter(dog => {
+    return dog?.breeds?.[0]?.name.toLowerCase().includes(searchValue.toLowerCase());
+  })
+  
   return (
     <Stack justifyContent="center">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            Сute dogs
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <TextField 
+            style={{width:"40%", margin: "10px 0 20px"}}
+            label="search" 
+            type="search"  
+            onChange={(event) => setSearchValue(event.target.value)}
+      />
       <Grid container spacing={3}>
-      {dogs.map((dog) => dog?.breeds?.length > 0 && (
+      {filteredDogs.map((dog) => dog?.breeds?.length > 0 && (
           <Grid item xs={12} sm={6} md={4} lg={3} key={dog.id}>
             <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardActionArea>
                     <CardMedia
                     component="img"
                     src={`${dog.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '300px', objectFit: 'contain' }}
+                    style={{ width: '90%', height: '300px', objectFit: 'contain', margin: "10px auto 0"}}
                     alt={"Dog"}
                     />
                     <CardContent>
