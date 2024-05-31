@@ -11,6 +11,7 @@ import Copyright from './Copyright';
 import ErrorPage from './ErrorPage';
 import Header from './Header';
 import Loading from './Loading';
+import TextField from '@mui/material/TextField';
 
 interface Dog {
     id: string;
@@ -133,6 +134,7 @@ const Dogs: React.FC = () => {
                       </Card>
                   </Grid>
               ))}
+
           </Grid>
           <Stack spacing={1} marginTop={{ xs: "1rem", sm: "2rem", md: "3rem" }} justifyContent="center">
               <Pagination

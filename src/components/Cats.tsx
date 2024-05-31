@@ -9,6 +9,7 @@ import ErrorPage from './ErrorPage';
 import Header from './Header';
 import Loading from './Loading';
 
+
 interface Cat {
     id: string;
     url: string;
@@ -71,9 +72,9 @@ const CatsList: React.FC = () => {
                     <CardMedia
                     component="img"
                     src={`${cat.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '300px', objectFit: 'cover', objectPosition: 'center' }}
-                    alt={"Cat"}
-                    
+
+                    style={{ width: '90%', height: '300px', objectFit: 'contain', margin: "10px auto 0" }}
+                    alt={"Cat"}             
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
