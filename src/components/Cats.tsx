@@ -37,12 +37,11 @@ const CatsList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=150&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=100&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: Cat[] = await response.json();
-        console.log(data)
         setCats(data);
       } catch (error) {
         setError('An error occurred while fetching the data.');
@@ -66,17 +65,16 @@ const CatsList: React.FC = () => {
     <Stack m={{xs: "1rem", sm: "1.5rem", md: "2rem"}} justifyContent="center" alignItems="center">
         <Header />
         <Grid container spacing={3} marginTop={{xs: "0rem", md:"2rem"}}>
-        {/* {cats.map((cat) => cat?.breeds?.length > 0 && ( */}
-            {cats.map((cat) => 
+          {cats.map((cat) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={cat.id}>
                 <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <CardActionArea style={{ cursor: 'default' }}>                    
                     <CardMedia
                     component="img"
                     src={`${cat.url}?w=248&fit=crop&auto=format`}
+
                     style={{ width: '90%', height: '300px', objectFit: 'contain', margin: "10px auto 0" }}
-                    alt={"Dog"}
-                    
+                    alt={"Cat"}             
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
@@ -107,7 +105,7 @@ const CatsList: React.FC = () => {
                 </CardActions>  
                 </Card>
             </Grid>
-            )}
+            ))}
         </Grid>
         <Stack spacing={1} marginTop={{xs: "1rem", sm: "2rem", md: "3rem"}} justifyContent="center">
             <Pagination
