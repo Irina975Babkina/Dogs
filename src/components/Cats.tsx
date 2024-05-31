@@ -36,12 +36,11 @@ const CatsList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=20&page=${page}&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
+        const response = await fetch(`https://api.thecatapi.com/v1/images/search?limit=100&api_key=live_OMTMoJ6hlIaS7p75QfY0M7r6NeTvdaWVS2FSsGhYfKI0qEtXEFl4qWusC7c0aXa7`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: Cat[] = await response.json();
-        console.log(data)
         setCats(data);
       } catch (error) {
         setError('An error occurred while fetching the data.');
@@ -72,7 +71,7 @@ const CatsList: React.FC = () => {
                     <CardMedia
                     component="img"
                     src={`${cat.url}?w=248&fit=crop&auto=format`}
-                    style={{ width: '100%', height: '300px', objectFit: 'contain' }}
+                    style={{ width: '100%', height: '300px', objectFit: 'cover', objectPosition: 'center' }}
                     alt={"Cat"}
                     
                     />
