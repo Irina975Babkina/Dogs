@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 const typographyStyle = {
     fontSize: 'calc(16px + 5vmin)',
     color: '#4b4b51',
-    textAlign: 'center',
   };
 
 function Header() {
