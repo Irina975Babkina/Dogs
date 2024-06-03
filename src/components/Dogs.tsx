@@ -11,8 +11,6 @@ import Copyright from './Copyright';
 import ErrorPage from './ErrorPage';
 import Header from './Header';
 import Loading from './Loading';
-import TextField from '@mui/material/TextField';
-
 interface Dog {
     id: string;
     url: string;
